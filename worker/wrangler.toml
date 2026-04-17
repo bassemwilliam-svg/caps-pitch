@@ -1,0 +1,16 @@
+name = "mcc-caps-ai"
+main = "src/index.js"
+compatibility_date = "2025-04-01"
+
+# Comma-separated list of allowed origins. Add your production domain(s) here
+# before deploying. Localhost entries are kept in the code as a fallback for
+# local preview.
+[vars]
+ALLOWED_ORIGINS = "https://your-site.com,https://www.your-site.com"
+
+# Optional: bind a KV namespace for per-IP rate limiting. To enable:
+#   wrangler kv:namespace create RATE_LIMIT_KV
+# then paste the id below and uncomment.
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT_KV"
+# id = "REPLACE_WITH_KV_ID"

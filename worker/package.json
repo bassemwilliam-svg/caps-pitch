@@ -1,0 +1,15 @@
+{
+  "name": "mcc-caps-ai-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker proxy for the MCC CAPS AI pitch-site assistant",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "secret:set": "wrangler secret put ANTHROPIC_API_KEY",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^3.80.0"
+  }
+}
