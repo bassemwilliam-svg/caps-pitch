@@ -17,24 +17,37 @@ info()  { printf "${DIM}  %s${RESET}\n" "$*"; }
 ok()    { printf "${GREEN}  ✓ %s${RESET}\n" "$*"; }
 die()   { printf "${RED}  ✗ %s${RESET}\n" "$*"; exit 1; }
 
-# ─── 1. Install Wrangler if missing ────────────────────────────────────
-if [ ! -d node_modules ]; then
-  step "Installing Wrangler"
-  npm install --silent
-  ok "Wrangler installed"
+# ─── 1. Install / upgrade Wrangler ─────────────────────────────────────
+NEEDED_MAJOR=4
+INSTALLED_VERSION=$(npx --no-install wrangler --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1 || echo "")
+INSTALLED_MAJOR=$(echo "$INSTALLED_VERSION" | cut -d. -f1)
+if [ ! -d node_modules ] || [ -z "$INSTALLED_MAJOR" ] || [ "$INSTALLED_MAJOR" -lt "$NEEDED_MAJOR" ]; then
+  step "Installing Wrangler v${NEEDED_MAJOR}"
+  npm install --silent --save-dev "wrangler@^${NEEDED_MAJOR}"
+  ok "Wrangler $(npx --no-install wrangler --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1) installed"
 else
-  ok "Wrangler already installed"
+  ok "Wrangler $INSTALLED_VERSION already installed"
 fi
 
-# ─── 2. Cloudflare login ───────────────────────────────────────────────
+# ─── 2. Cloudflare auth ────────────────────────────────────────────────
+# `wrangler whoami` returns exit code 0 even when unauthenticated, so we
+# grep the output instead of trusting the exit code.
 step "Cloudflare account"
-if npx --no-install wrangler whoami >/dev/null 2>&1; then
-  ACCOUNT=$(npx --no-install wrangler whoami 2>/dev/null | grep -oE '[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+' | head -1 || echo "logged in")
-  ok "Signed in as $ACCOUNT"
+if [ -n "$CLOUDFLARE_API_TOKEN" ]; then
+  ok "Using CLOUDFLARE_API_TOKEN from environment"
 else
-  info "Not signed in — opening browser for Cloudflare OAuth..."
-  npx wrangler login
-  ok "Signed in"
+  WHOAMI_OUT=$(npx --no-install wrangler whoami 2>&1 || true)
+  if echo "$WHOAMI_OUT" | grep -qi "not authenticated\|please run.*login"; then
+    info "Not signed in. Opening browser for Cloudflare OAuth..."
+    info "(If no browser opens, copy the URL Wrangler prints and open it manually.)"
+    if ! npx --no-install wrangler login; then
+      die "Login failed. Alternative: create a token at https://dash.cloudflare.com/profile/api-tokens (template: 'Edit Cloudflare Workers'), then run:  export CLOUDFLARE_API_TOKEN=<token>  and re-run this script."
+    fi
+    ok "Signed in"
+  else
+    ACCOUNT=$(echo "$WHOAMI_OUT" | grep -oE '[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+' | head -1 || echo "logged in")
+    ok "Signed in as $ACCOUNT"
+  fi
 fi
 
 # ─── 3. Allowed origins ────────────────────────────────────────────────

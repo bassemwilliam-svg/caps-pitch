@@ -6,7 +6,7 @@ compatibility_date = "2025-04-01"
 # before deploying. Localhost entries are kept in the code as a fallback for
 # local preview.
 [vars]
-ALLOWED_ORIGINS = "https://your-site.com,https://www.your-site.com"
+ALLOWED_ORIGINS = "https://bassemwilliam-svg.github.io"
 
 # Optional: bind a KV namespace for per-IP rate limiting. To enable:
 #   wrangler kv:namespace create RATE_LIMIT_KV
