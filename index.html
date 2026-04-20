@@ -1226,6 +1226,36 @@ html[dir="rtl"] .llm-msg-body li::before { left: auto; right: 0; }
 .llm-status.live { color: var(--gold-light); border-color: rgba(155,134,101,0.5); background: rgba(155,134,101,0.12); }
 .llm-status.live .llm-dot { background: var(--gold-light); box-shadow: 0 0 8px rgba(186,172,152,0.6); }
 
+@media (max-width: 720px) {
+  #ai .container { padding-left: 1rem; padding-right: 1rem; }
+  .llm-chat { border-radius: 10px; margin-top: 1.5rem; max-width: 100%; }
+  .llm-chat-hd { flex-wrap: wrap; gap: 0.6rem; padding: 0.8rem 0.9rem; }
+  .llm-chat-hd > div:nth-child(2) { flex: 1 1 auto; min-width: 0; }
+  .llm-chat-title { font-size: 0.85rem; line-height: 1.3; }
+  .llm-chat-sub { font-size: 0.66rem; line-height: 1.45; }
+  .llm-status { flex: 0 0 auto; padding: 0.3rem 0.55rem; font-size: 0.6rem; letter-spacing: 0.1em; margin-left: auto; }
+  .brand-monogram { flex-shrink: 0; }
+  .llm-chat-body { padding: 1rem 0.9rem; min-height: 280px; max-height: 55vh; font-size: 0.88rem; line-height: 1.65; }
+  .llm-msg-body { font-size: 0.88rem; line-height: 1.7; }
+  .llm-msg-body li { padding-left: 1rem; }
+  html[dir="rtl"] .llm-msg-body li { padding-right: 1rem; padding-left: 0; }
+  .llm-suggestions { padding: 0 0.9rem 0.7rem; gap: 0.35rem; }
+  .llm-sugg { font-size: 0.72rem; padding: 0.45rem 0.75rem; }
+  .llm-input-row { padding: 0.75rem 0.9rem 0.9rem; gap: 0.45rem; }
+  .llm-input-row input { padding: 0.7rem 0.85rem; font-size: 0.85rem; }
+  .llm-input-row button { padding: 0 0.9rem; min-width: 44px; min-height: 44px; }
+  .llm-citations { gap: 0.3rem; }
+  .llm-cite { font-size: 0.62rem; padding: 0.2rem 0.5rem; }
+  #ai h2 { font-size: 1.6rem; line-height: 1.25; }
+  #ai .lead { font-size: 0.92rem; }
+}
+@media (max-width: 420px) {
+  .llm-chat-body { padding: 0.85rem 0.75rem; }
+  .llm-suggestions { padding: 0 0.75rem 0.6rem; }
+  .llm-input-row { padding: 0.65rem 0.75rem 0.8rem; }
+  .llm-chat-hd { padding: 0.7rem 0.75rem; }
+}
+
 /* ==========================================================================
    RATING BAR (mcc.gov.ae signature gold strip)
    ========================================================================== */
@@ -1675,6 +1705,38 @@ html[dir="rtl"] .chat-jump-btn { text-align: right; }
 html[dir="rtl"] .chat-jump-btn::before { content: "← "; }
 html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
 
+/* Chatbot FAB & panel — mobile responsiveness */
+@media (max-width: 720px) {
+  .chatbot-fab { width: 54px; height: 54px; bottom: 1rem; right: 1rem; }
+  html[dir="rtl"] .chatbot-fab { right: auto; left: 1rem; }
+  .chatbot-panel {
+    width: auto;
+    max-width: none;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 4.5rem;
+    height: calc(100dvh - 5.5rem);
+    max-height: calc(100dvh - 5.5rem);
+    border-radius: 12px;
+  }
+  html[dir="rtl"] .chatbot-panel { left: 0.5rem; right: 0.5rem; }
+  .chatbot-head { padding: 0.85rem 1rem; gap: 0.6rem; }
+  .chatbot-head-txt strong { font-size: 0.82rem; }
+  .chatbot-head-txt span { font-size: 0.68rem; }
+  .chatbot-body { padding: 0.9rem 0.9rem; font-size: 0.9rem; }
+  .bot-msg, .user-msg { font-size: 0.87rem; padding: 0.8rem 0.95rem; max-width: 96%; }
+  .chatbot-suggestions { padding: 0.65rem 0.85rem; gap: 0.35rem; }
+  .chat-chip { font-size: 0.72rem; padding: 0.42rem 0.75rem; }
+  .chat-quick-nav summary { padding: 0.6rem 0.9rem; font-size: 0.65rem; }
+  .chat-quick-nav-inner { padding: 0 0.85rem 0.75rem; gap: 0.35rem; }
+  .chat-jump-btn { font-size: 0.72rem; padding: 0.5rem 0.6rem; }
+}
+@supports not (height: 100dvh) {
+  @media (max-width: 720px) {
+    .chatbot-panel { height: calc(100vh - 5.5rem); max-height: calc(100vh - 5.5rem); }
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1778,7 +1840,7 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
 
     <div class="stat-grid reveal d1">
       <div class="stat-card"><span class="stat-num">5</span><span class="stat-lbl"><span class="lang-en">VR Scenarios</span><span class="lang-ar">سيناريوهات افتراضية</span></span></div>
-      <div class="stat-card"><span class="stat-num">8+1</span><span class="stat-lbl"><span class="lang-en">Operator · Supervisor Stations</span><span class="lang-ar">مشغّلين · مشرف</span></span></div>
+      <div class="stat-card"><span class="stat-num">8</span><span class="stat-lbl"><span class="lang-en">Operator · Supervisor Stations</span><span class="lang-ar">مشغّلين · مشرف</span></span></div>
       <div class="stat-card"><span class="stat-num">9</span><span class="stat-lbl"><span class="lang-en">Biometric Signals</span><span class="lang-ar">إشارات حيوية</span></span></div>
       <div class="stat-card"><span class="stat-num">4</span><span class="stat-lbl"><span class="lang-en">Scoring Dimensions</span><span class="lang-ar">أبعاد التقييم</span></span></div>
       <div class="stat-card"><span class="stat-num">4</span><span class="stat-lbl"><span class="lang-en">Coverage Levels</span><span class="lang-ar">مستويات التغطية</span></span></div>
@@ -1806,7 +1868,7 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
             </div>
           </div>
           <div class="report-hero-txt">
-            <span class="lang-en">Performance anchored by false-positive discipline (80/100). Gaze coverage critically low. Remedial training recommended before further deployment.</span>
+            <span class="lang-en">Performance anchored by false-alarm discipline (80/100). Gaze coverage critically low. Remedial training recommended before further deployment.</span>
             <span class="lang-ar">الأداء يرتكز على انضباط عالٍ في تجنّب الإنذارات الكاذبة (80/100)، لكن تغطية النظر منخفضة بشكل حرج. يُوصى بتدريب علاجي قبل العودة إلى الخدمة.</span>
           </div>
         </div>
@@ -1817,7 +1879,7 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
             <span class="dim-val" style="color: var(--warning);">65</span>
           </div>
           <div class="dim-row">
-            <span><span class="lang-en">False positives (20%)</span><span class="lang-ar">الإنذارات الكاذبة (20%)</span></span>
+            <span><span class="lang-en">False alarms (20%)</span><span class="lang-ar">الإنذارات الكاذبة (20%)</span></span>
             <div class="dim-bar"><div class="dim-fill" style="width:80%; background: var(--success);"></div></div>
             <span class="dim-val" style="color: var(--success);">80</span>
           </div>
@@ -1841,7 +1903,7 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
         <div class="rec-list">
           <div class="rec"><span class="rec-p high"><span class="lang-en">High</span><span class="lang-ar">عالٍ</span></span><span><span class="lang-en">Broaden gaze coverage via rotation cadence — 2.9% is critically low.</span><span class="lang-ar">توسيع نطاق النظر من خلال تمرين التدوير — نسبة 2.9٪ منخفضة بشكل حرج.</span></span></div>
           <div class="rec"><span class="rec-p med"><span class="lang-en">Med</span><span class="lang-ar">متوسّط</span></span><span><span class="lang-en">Compress reaction latency with scan-pattern drills — p50: 25s, p90: 80s.</span><span class="lang-ar">تقليص زمن الاستجابة عبر تمارين أنماط الفحص — المتوسط 25ث، الذروة 80ث.</span></span></div>
-          <div class="rec"><span class="rec-p low"><span class="lang-en">Low</span><span class="lang-ar">منخفض</span></span><span><span class="lang-en">Extend false-positive discipline (80/100) strength to other dimensions.</span><span class="lang-ar">البناء على انضباط الإنذارات الكاذبة (80/100) في باقي الأبعاد.</span></span></div>
+          <div class="rec"><span class="rec-p low"><span class="lang-en">Low</span><span class="lang-ar">منخفض</span></span><span><span class="lang-en">Extend false-alarm discipline (80/100) strength to other dimensions.</span><span class="lang-ar">البناء على انضباط الإنذارات الكاذبة (80/100) في باقي الأبعاد.</span></span></div>
         </div>
       </div>
     </div>
@@ -2128,9 +2190,9 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
         <div class="cap-id">CAP-3</div>
         <div class="cap-name"><span class="lang-en">Decision Under Pressure</span><span class="lang-ar">القرار تحت الضغط</span></div>
         <div class="cap-q"><span class="lang-en">"Right call, high stakes, short time?"</span><span class="lang-ar">«قرار صائب، مخاطر عالية، وقت ضيّق؟»</span></div>
-        <p class="cap-maps"><strong><span class="lang-en">From your data:</span><span class="lang-ar">من بياناتكم:</span></strong> <span class="lang-en">Reaction speed, false positive rate, biometrics at decision points</span><span class="lang-ar">سرعة الاستجابة، نسبة الإنذار الكاذب، القياسات الحيوية عند لحظة القرار</span></p>
+        <p class="cap-maps"><strong><span class="lang-en">From your data:</span><span class="lang-ar">من بياناتكم:</span></strong> <span class="lang-en">Reaction speed, false alarm rate, biometrics at decision points</span><span class="lang-ar">سرعة الاستجابة، نسبة الإنذار الكاذب، القياسات الحيوية عند لحظة القرار</span></p>
         <ul class="subcap-list">
-          <li><span class="lang-en">3.1 False Positive Discipline</span><span class="lang-ar">3.1 انضباط الإنذارات الكاذبة</span></li>
+          <li><span class="lang-en">3.1 False Alarm Discipline</span><span class="lang-ar">3.1 انضباط الإنذارات الكاذبة</span></li>
           <li><span class="lang-en">3.2 Stress-Decision Quality</span><span class="lang-ar">3.2 جودة القرار تحت التوتر</span></li>
           <li><span class="lang-en">3.3 Time-Pressure Performance</span><span class="lang-ar">3.3 الأداء تحت ضغط الوقت</span></li>
           <li><span class="lang-en">3.4 Detection Accuracy Under Load</span><span class="lang-ar">3.4 دقّة الرصد تحت الحمل</span></li>
@@ -2217,7 +2279,7 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
           <div class="mapping-data">
             <div><span class="lang-en">Alarm responses: 2s, <strong>26s</strong>, <strong>17s</strong>, 0s</span><span class="lang-ar">الاستجابات: 2ث، <strong>26ث</strong>، <strong>17ث</strong>، 0ث</span></div>
             <div><span class="lang-en">3 of 4 entities marked; mixed timing</span><span class="lang-ar">وسم 3 من 4 مع توقيت متفاوت</span></div>
-            <div><span class="lang-en">1 false positive in 4 marks</span><span class="lang-ar">إنذار كاذب واحد من 4 وسوم</span></div>
+            <div><span class="lang-en">1 false alarm in 4 marks</span><span class="lang-ar">إنذار كاذب واحد من 4 وسوم</span></div>
           </div>
         </div>
         <div class="mapping-arrow">→</div>
@@ -2237,7 +2299,7 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
         <div>
           <div class="mapping-data-lbl"><span class="lang-en">From Hessa's Report</span><span class="lang-ar">من تقرير حصّة</span></div>
           <div class="mapping-data">
-            <div><span class="lang-en">False positive score: <strong style="color: var(--success);">80/100</strong></span><span class="lang-ar">درجة الإنذار الكاذب: <strong style="color: var(--success);">80/100</strong></span></div>
+            <div><span class="lang-en">False alarm score: <strong style="color: var(--success);">80/100</strong></span><span class="lang-ar">درجة الإنذار الكاذب: <strong style="color: var(--success);">80/100</strong></span></div>
             <div><span class="lang-en">Detection accuracy: 65/100</span><span class="lang-ar">دقة الرصد: 65/100</span></div>
             <div><span class="lang-en">4 stress episodes — no marking errors during stress</span><span class="lang-ar">4 نوبات توتر بلا أخطاء وسم خلالها</span></div>
           </div>
@@ -2611,7 +2673,7 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
         <div class="cmp-score" style="color: var(--danger);">47</div>
         <div class="cmp-verdict" style="color: var(--danger);"><span class="lang-en">FAIL</span><span class="lang-ar">رسوب</span></div>
         <div class="mute" style="font-size:0.85rem; margin-top:1rem; line-height:1.8;">
-          <span class="lang-en">Detection: 65/100<br>False Positives: 80/100<br>Timeliness: 25/100<br>Attention: 0/100</span>
+          <span class="lang-en">Detection: 65/100<br>False Alarms: 80/100<br>Timeliness: 25/100<br>Attention: 0/100</span>
           <span class="lang-ar">الرصد: 65/100<br>الإنذارات الكاذبة: 80/100<br>التوقيت: 25/100<br>الانتباه: 0/100</span>
           <em style="display:block; margin-top:0.8rem;"><span class="lang-en">"Remedial training recommended."</span><span class="lang-ar">«يُوصى بتدريب علاجي.»</span></em>
         </div>
@@ -3310,7 +3372,7 @@ const llmKnowledge = [
     keys: ['summary','overview','brief','overall','summarise','summarize','ملخّص','ملخص','نظرة','عامة'],
     suggest: { en: 'Summarise Hessa\'s session', ar: 'لخّص جلسة حصّة' },
     answer: {
-      en: "Hessa handled a 4m 49s airport <em>suspicious-item</em> scenario across 8 camera feeds. Her overall score of <strong class=\"highlight-crit\">47/100</strong> hides a more nuanced truth:<ul><li><strong class=\"highlight-good\">Decision-making is strong.</strong> CAP-3 sits at 65, driven by an 80/100 false-positive discipline. She rejected the bait and marked real entities correctly.</li><li><strong class=\"highlight-crit\">Sensemaking is the failure.</strong> CAP-1 is 15. She fixated on Cam_07 (45.3% of dwell, 0 events) while Cam_02 carried 69% of critical activity.</li><li><strong class=\"highlight-warn\">Communication was mixed.</strong> CAP-2: 53. Alarm latencies ranged from 2s to 26s — inconsistent under load.</li><li><strong>Recovery cannot be judged.</strong> CAP-4 needs longitudinal data.</li></ul>Short version: <em>this isn't an operator who can't decide — it's an operator who was looking at the wrong feed.</em>",
+      en: "Hessa handled a 4m 49s airport <em>suspicious-item</em> scenario across 8 camera feeds. Her overall score of <strong class=\"highlight-crit\">47/100</strong> hides a more nuanced truth:<ul><li><strong class=\"highlight-good\">Decision-making is strong.</strong> CAP-3 sits at 65, driven by an 80/100 false-alarm discipline. She rejected the bait and marked real entities correctly.</li><li><strong class=\"highlight-crit\">Sensemaking is the failure.</strong> CAP-1 is 15. She fixated on Cam_07 (45.3% of dwell, 0 events) while Cam_02 carried 69% of critical activity.</li><li><strong class=\"highlight-warn\">Communication was mixed.</strong> CAP-2: 53. Alarm latencies ranged from 2s to 26s — inconsistent under load.</li><li><strong>Recovery cannot be judged.</strong> CAP-4 needs longitudinal data.</li></ul>Short version: <em>this isn't an operator who can't decide — it's an operator who was looking at the wrong feed.</em>",
       ar: "حصّة تعاملت مع سيناريو <em>جسم مشبوه</em> في المطار مدّته 4د 49ث عبر 8 كاميرات. درجتها الإجمالية <strong class=\"highlight-crit\">47/100</strong> تُخفي حقيقة أدقّ:<ul><li><strong class=\"highlight-good\">صنع القرار قويّ.</strong> القدرة-3 عند 65 بفضل انضباط إنذار كاذب 80/100. رفضت الطُعم ووسمت الكيانات الحقيقية بدقّة.</li><li><strong class=\"highlight-crit\">الفهم هو نقطة الفشل.</strong> القدرة-1 عند 15. ركّزت على الكاميرا 07 (45.3% من التركيز و0 أحداث) بينما الكاميرا 02 حوت 69% من النشاط الحرج.</li><li><strong class=\"highlight-warn\">التواصل متفاوت.</strong> القدرة-2: 53. زمن الاستجابة بين 2ث و26ث — تفاوت تحت الحمل.</li><li><strong>التعافي غير قابل للتقييم.</strong> القدرة-4 تحتاج بيانات طولية.</li></ul>الخلاصة: <em>ليست مشغّلة لا تُحسن القرار، بل مشغّلة كانت تنظر إلى الكاميرا الخطأ.</em>"
     },
     cites: ['CAPS v1.0', 'Manual of Standards v2.0', 'Session: 2026-04-14']
@@ -3328,7 +3390,7 @@ const llmKnowledge = [
     keys: ['training','recommend','recommendation','fix','drill','intervention','remedial','target','targeted','تدريب','توصية','علاج','تمرين','استهداف'],
     suggest: { en: 'What training should she get?', ar: 'ما التدريب المناسب لها؟' },
     answer: {
-      en: "The current system's recommendation — <em>\"remedial training\"</em> — is the wrong answer. It would waste her strongest capability and not fix the actual gap.<br><br>CAPS prescribes a <strong class=\"highlight-good\">targeted intervention</strong>:<ul><li><strong>Module:</strong> Multi-feed scanning drill with enforced rotation cadence.</li><li><strong>Target:</strong> SubCAP 1.2 Threat-Feed Alignment (currently 8/100).</li><li><strong>Avoid:</strong> any drill that re-teaches marking discipline — it would dilute her 80/100 FP score.</li><li><strong>Delivery:</strong> Mixed Reality module where Cam_02-equivalent feeds are the attention attractor.</li><li><strong>Projected:</strong> CAP-1 from 15 → 45 in 4 sessions. CAP-3 stays untouched.</li></ul>This is the difference between <em>training an operator</em> and <em>treating a score</em>.",
+      en: "The current system's recommendation — <em>\"remedial training\"</em> — is the wrong answer. It would waste her strongest capability and not fix the actual gap.<br><br>CAPS prescribes a <strong class=\"highlight-good\">targeted intervention</strong>:<ul><li><strong>Module:</strong> Multi-feed scanning drill with enforced rotation cadence.</li><li><strong>Target:</strong> SubCAP 1.2 Threat-Feed Alignment (currently 8/100).</li><li><strong>Avoid:</strong> any drill that re-teaches marking discipline — it would dilute her 80/100 false-alarm score.</li><li><strong>Delivery:</strong> Mixed Reality module where Cam_02-equivalent feeds are the attention attractor.</li><li><strong>Projected:</strong> CAP-1 from 15 → 45 in 4 sessions. CAP-3 stays untouched.</li></ul>This is the difference between <em>training an operator</em> and <em>treating a score</em>.",
       ar: "توصية النظام الحالي — <em>«تدريب علاجي»</em> — إجابة خاطئة. تُهدر نقطة قوّتها ولا تُعالج الفجوة الفعلية.<br><br>إطار القدرات يصف <strong class=\"highlight-good\">تدخّلاً موجّهاً</strong>:<ul><li><strong>الوحدة:</strong> تمرين مسح متعدّد الكاميرات بإيقاع تدوير إلزامي.</li><li><strong>الهدف:</strong> القدرة الفرعية 1.2 (التوافق مع مصادر التهديد) — حالياً 8/100.</li><li><strong>تجنّب:</strong> أيّ تمرين يُعيد تعليم انضباط الوسم — سيُضعف نقاطها 80/100.</li><li><strong>التنفيذ:</strong> وحدة واقع مختلط تُحوّل الكاميرا المعادلة لـ02 إلى جاذب للانتباه.</li><li><strong>المتوقّع:</strong> القدرة-1 من 15 إلى 45 خلال 4 جلسات. القدرة-3 دون تغيير.</li></ul>هذا هو الفرق بين <em>تدريب مشغّل</em> و<em>معالجة درجة</em>."
     },
     cites: ['SubCAP 1.2', 'MR Training Module 04', 'CAPS v1.0 § interventions']
@@ -3337,7 +3399,7 @@ const llmKnowledge = [
     keys: ['stress','biometric','hr','eda','heart','pressure','cognitive','توتر','بيومتري','قلب','ضغط'],
     suggest: { en: 'How did stress affect her?', ar: 'كيف أثّر التوتر عليها؟' },
     answer: {
-      en: "Her physiological stream showed <strong>four measurable stress episodes</strong>. Peak HR reached <strong>83 bpm</strong> at t=208s (+14.5% over baseline); EDA climbed into the 0.197 µS band.<br><br>Here's the revealing part: <strong class=\"highlight-good\">no marking errors occurred during stress windows.</strong> Her false-positive rate stayed at 1-in-4, none of them clustered around stress peaks. That's a CAP-3 signature: <em>decision quality preserved under physiological load.</em><br><br>What she <em>didn't</em> do during stress was widen her scan. The tunnel on Cam_07 tightened, not loosened. This is a well-documented attention-narrowing effect under arousal — but it's a CAP-1 failure, not a CAP-3 failure. A score treats them together. CAPS keeps them separate.",
+      en: "Her physiological stream showed <strong>four measurable stress episodes</strong>. Peak HR reached <strong>83 bpm</strong> at t=208s (+14.5% over baseline); EDA climbed into the 0.197 µS band.<br><br>Here's the revealing part: <strong class=\"highlight-good\">no marking errors occurred during stress windows.</strong> Her false-alarm rate stayed at 1-in-4, none of them clustered around stress peaks. That's a CAP-3 signature: <em>decision quality preserved under physiological load.</em><br><br>What she <em>didn't</em> do during stress was widen her scan. The tunnel on Cam_07 tightened, not loosened. This is a well-documented attention-narrowing effect under arousal — but it's a CAP-1 failure, not a CAP-3 failure. A score treats them together. CAPS keeps them separate.",
       ar: "تدفّقها الفسيولوجي أظهر <strong>أربع نوبات توتر قابلة للقياس</strong>. ذروة النبض بلغت <strong>83 نبضة/د</strong> عند t=208ث (+14.5% فوق الأساس)؛ EDA ارتفع إلى نطاق 0.197 µS.<br><br>الجانب الكاشف: <strong class=\"highlight-good\">لا أخطاء وسم خلال نوافذ التوتر.</strong> نسبة الإنذار الكاذب بقيت 1 من 4 ولم تتجمّع حول ذرى التوتر. هذه بصمة القدرة-3: <em>جودة القرار محفوظة تحت الحمل الفسيولوجي.</em><br><br>الذي <em>لم تفعله</em> تحت التوتر هو توسيع نطاق المسح. ضيق التركيز على الكاميرا 07 ازداد ولم يتراخَ. أثر موثّق لتضيّق الانتباه تحت الإثارة — لكنه فشل قدرة-1 لا قدرة-3. الدرجة تدمجهما؛ الإطار يفصلهما."
     },
     cites: ['Biometric stream', 'Arnsten 2009', 'CAP-1 vs CAP-3 separation']
@@ -3434,10 +3496,10 @@ ROLE
 GROUNDING — HESSA'S SESSION
 Operator: Hessa. Scenario: Airport — Suspicious Item. Duration: 4m 49s. 8 camera feeds. 9 biometric signals.
 Overall score: 47/100 (Fail under current system).
-Breakdown: Detection accuracy 65/100 · False-positive discipline 80/100 · Timeliness 25/100 · Attention & gaze 0/100.
+Breakdown: Detection accuracy 65/100 · False-alarm discipline 80/100 · Timeliness 25/100 · Attention & gaze 0/100.
 Gaze coverage: 2.9%. Cam_07 received 45.3% of dwell time with 0 critical events. Cam_02 had 69% of critical events but only 2% of her gaze. 21 critical events missed.
 Biometrics: 4 stress episodes. Peak HR 83 bpm at t=208s (+14.5% over baseline). EDA peak 0.197 µS. No marking errors during stress windows — decision quality preserved under load.
-Marking: 4 total marks, 3 correct, 1 false positive. Alarm response latencies: 2s, 26s, 17s, 0s.
+Marking: 4 total marks, 3 correct, 1 false alarm. Alarm response latencies: 2s, 26s, 17s, 0s.
 
 CAPS FRAMEWORK (4 capabilities, 14 sub-capabilities)
 - CAP-1 Sensemaking (gaze breadth, threat-feed alignment, camera switching). Hessa: 15/100 — CRITICAL. SubCAP 1.2 Threat-Feed Alignment: 8/100.
