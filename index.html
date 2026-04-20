@@ -838,6 +838,246 @@ html[dir="rtl"] .rm-item::before { left: auto; right: -2.4rem; }
 .mr-feat p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.7; }
 
 /* ==========================================================================
+   COMPLEX INCIDENTS — Phase 2 decision-gate mechanic
+   ========================================================================== */
+.inc-pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
+.inc-pillar {
+  background: var(--white); border: 1px solid var(--line); border-radius: 8px;
+  padding: 1.5rem; border-top: 3px solid var(--gold);
+  position: relative;
+}
+.inc-pillar-num {
+  position: absolute; top: -14px; left: 1.3rem;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gold); color: var(--white);
+  font-size: 0.78rem; font-weight: 700;
+  display: grid; place-items: center;
+  box-shadow: var(--shadow-md);
+}
+.inc-pillar h3 { margin-bottom: 0.5rem; margin-top: 0.3rem; }
+.inc-pillar p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.7; }
+
+.incident-card {
+  background: var(--white); border: 1px solid var(--line); border-radius: 10px;
+  margin-top: 3rem; overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border-top: 4px solid var(--gold);
+}
+.inc-hero-visual {
+  position: relative; width: 100%;
+  aspect-ratio: 16 / 7;
+  background: var(--navy-deep);
+  overflow: hidden;
+}
+.inc-hero-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  filter: saturate(0.55) contrast(1.05) brightness(0.7);
+}
+.inc-hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(37,44,57,0.55) 0%, rgba(37,44,57,0.05) 35%, rgba(37,44,57,0.15) 65%, rgba(37,44,57,0.75) 100%),
+    radial-gradient(60% 80% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+}
+.inc-hero-bbox {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+.inc-hero-hud {
+  position: absolute;
+  color: var(--white);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  background: rgba(37,44,57,0.55);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(186,172,152,0.35);
+  border-radius: 4px;
+}
+.hud-tl { top: 14px; left: 14px; }
+.hud-tr { top: 14px; right: 14px; color: var(--gold-light); }
+.hud-bl { bottom: 14px; left: 14px; background: transparent; border: none; padding: 0; }
+.hud-br { bottom: 14px; right: 14px; color: var(--gold-light); font-weight: 700; }
+.hud-rec {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #c94c4c;
+  box-shadow: 0 0 0 3px rgba(201,76,76,0.25);
+  animation: recblink 1.4s ease-in-out infinite;
+}
+@keyframes recblink { 0%, 60% { opacity: 1; } 80%, 100% { opacity: 0.35; } }
+.hud-pill {
+  display: inline-flex; align-items: center;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  color: #fff;
+  background: rgba(201,76,76,0.85);
+  border: 1px solid #c94c4c;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.hud-caps { font-size: 0.68rem; }
+@media (max-width: 700px) {
+  .inc-hero-visual { aspect-ratio: 16 / 10; }
+  .inc-hero-hud { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
+  .hud-pill { font-size: 0.58rem; padding: 0.35rem 0.55rem; }
+}
+.inc-brief {
+  padding: 1.6rem 1.8rem 1.2rem;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(155,134,101,0.06), rgba(255,255,255,0));
+}
+.inc-brief-tag {
+  display: inline-block;
+  font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold-dark); font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  margin-bottom: 0.8rem;
+}
+.inc-brief h3 { font-size: 1.35rem; margin-bottom: 0.6rem; color: var(--navy-deep); }
+.inc-brief p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.75; max-width: 780px; }
+
+.inc-timeline-wrap { padding: 1.8rem; }
+.inc-timeline-lbl {
+  font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--navy); font-weight: 700; margin-bottom: 1.2rem;
+}
+.inc-timeline {
+  position: relative;
+  height: 6px;
+  background: linear-gradient(90deg, rgba(155,134,101,0.15), rgba(155,134,101,0.4) 50%, #c94c4c 62%, rgba(155,134,101,0.4) 72%, rgba(155,134,101,0.15));
+  border-radius: 999px;
+  margin: 2.2rem 1rem 3rem;
+}
+.inc-tick {
+  position: absolute; top: -8px;
+  width: 2px; height: 22px;
+  background: var(--gold-dark); opacity: 0.35;
+  transform: translateX(-1px);
+}
+.inc-tick-lbl {
+  position: absolute; top: 18px;
+  font-size: 0.65rem; letter-spacing: 0.1em;
+  color: var(--ink-soft); font-weight: 600;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.inc-threat {
+  position: absolute; top: -16px;
+  width: 36px; height: 36px;
+  background: #c94c4c; color: var(--white);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 0.72rem; font-weight: 800;
+  transform: translateX(-50%);
+  box-shadow: 0 6px 18px rgba(201,76,76,0.45);
+  border: 3px solid var(--white);
+}
+.inc-threat-lbl {
+  position: absolute; top: 26px;
+  font-size: 0.7rem; font-weight: 700;
+  color: #c94c4c; letter-spacing: 0.08em;
+  transform: translateX(-50%);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.inc-gates {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+.inc-gate {
+  background: #fafaf7;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.inc-gate-hd {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(155,134,101,0.2);
+}
+.inc-gate-id {
+  width: 26px; height: 26px;
+  background: var(--navy-deep); color: var(--white);
+  border-radius: 6px;
+  display: grid; place-items: center;
+  font-size: 0.72rem; font-weight: 800;
+}
+.inc-gate-time {
+  font-size: 0.7rem; letter-spacing: 0.08em;
+  color: var(--gold-dark); font-weight: 700;
+}
+.inc-gate-see {
+  font-size: 0.82rem; line-height: 1.55;
+  color: var(--ink);
+}
+.inc-gate-see strong { color: var(--navy-deep); }
+.inc-gate-call {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  margin-top: 0.2rem;
+}
+.inc-call-pill {
+  font-size: 0.68rem; letter-spacing: 0.06em;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+.inc-call-pill.sus  { background: rgba(201,76,76,0.12);  color: #a83a3a; border-color: rgba(201,76,76,0.35); }
+.inc-call-pill.clr  { background: rgba(90,140,90,0.12);  color: #3a6e3a; border-color: rgba(90,140,90,0.35); }
+.inc-call-pill.esc  { background: rgba(155,134,101,0.14); color: var(--gold-dark); border-color: rgba(155,134,101,0.45); }
+.inc-call-pill.back { background: var(--navy-deep); color: var(--gold-light); border-color: var(--navy-deep); }
+.inc-gate-caps {
+  display: flex; gap: 0.3rem; margin-top: auto; padding-top: 0.5rem;
+  border-top: 1px dashed rgba(155,134,101,0.25);
+}
+.inc-cap-badge {
+  font-size: 0.62rem; letter-spacing: 0.08em;
+  padding: 0.22rem 0.5rem;
+  background: var(--navy-deep); color: var(--gold-light);
+  border-radius: 4px; font-weight: 700;
+}
+
+.inc-caps-strip {
+  margin: 0 1.8rem 1.8rem;
+  padding: 1rem 1.2rem;
+  background: var(--navy-deep); color: var(--white);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+.inc-caps-strip-lbl {
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold-light); font-weight: 700;
+}
+.inc-caps-strip-body {
+  font-size: 0.86rem; color: rgba(255,255,255,0.85); line-height: 1.6;
+}
+.inc-caps-strip-body strong { color: var(--gold-light); }
+
+@media (max-width: 900px) {
+  .inc-gates { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .inc-gates { grid-template-columns: 1fr; }
+  .inc-timeline { margin: 2.2rem 0.2rem 3rem; }
+  .inc-tick-lbl { font-size: 0.58rem; }
+}
+
+/* ==========================================================================
    LLM CHAT (AI Assistant) — Grounded conversational UI
    ========================================================================== */
 .llm-chat {
@@ -1468,6 +1708,7 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
     <a href="#standards"><span class="lang-en">Standards</span><span class="lang-ar">المعايير</span></a>
     <a href="#ai"><span class="lang-en">AI Engine</span><span class="lang-ar">الذكاء الاصطناعي</span></a>
     <a href="#scenarios"><span class="lang-en">Scenarios</span><span class="lang-ar">السيناريوهات</span></a>
+    <a href="#incidents"><span class="lang-en">Incidents</span><span class="lang-ar">الحوادث</span></a>
     <a href="#mr"><span class="lang-en">MR</span><span class="lang-ar">الواقع المختلط</span></a>
     <a href="#roadmap"><span class="lang-en">Roadmap</span><span class="lang-ar">خارطة الطريق</span></a>
     <a href="#roi"><span class="lang-en">ROI</span><span class="lang-ar">العائد</span></a>
@@ -2550,6 +2791,165 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
 
 <div class="pattern-divider"></div>
 
+<!-- ═══ SECTION: COMPLEX INCIDENTS ═══ -->
+<section class="section" id="incidents">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow reveal"><span class="lang-en">Complex Incidents · Phase 2</span><span class="lang-ar">الحوادث المركّبة · المرحلة الثانية</span></div>
+      <h2 class="reveal d1">
+        <span class="lang-en">Not just what they see.<br><span class="gold">What they decide next.</span></span>
+        <span class="lang-ar">ليس فقط ما يرونه،<br><span class="gold">بل ما يقرّرونه بعدها.</span></span>
+      </h2>
+      <p class="lead reveal d2">
+        <span class="lang-en">Phase 2 goes beyond single-moment drills. Incidents unfold over minutes, with <strong>decision gates, backtracking, and force deployment</strong> — the mechanics that separate a vigilant operator from a decisive one.</span>
+        <span class="lang-ar">المرحلة الثانية تتجاوز التمارين اللحظية. تمتدّ الحوادث على دقائق، بـ<strong>بوّابات قرار، ومراجعة خلفية، ونشر قوى</strong> — ميكانيكيّات تُفرّق بين المشغّل اليقِظ والمشغّل الحاسم.</span>
+      </p>
+    </div>
+
+    <div class="inc-pillars">
+      <div class="inc-pillar reveal">
+        <div class="inc-pillar-num">1</div>
+        <h3><span class="lang-en">Backtrack</span><span class="lang-ar">المراجعة الخلفية</span></h3>
+        <p><span class="lang-en">Operators scrub the last 60–90 seconds of feed and re-classify a behaviour they previously cleared. The system logs every reversal as a first-class signal in their CAPS profile.</span><span class="lang-ar">يعود المشغّل 60 إلى 90 ثانية في التسجيل ليُعيد تصنيف سلوك سبق أن تجاوزه. يسجّل النظام كلّ تراجع كإشارة أصيلة في ملف القدرات.</span></p>
+      </div>
+      <div class="inc-pillar reveal d1">
+        <div class="inc-pillar-num">2</div>
+        <h3><span class="lang-en">Pressure Call</span><span class="lang-ar">قرار تحت الضغط</span></h3>
+        <p><span class="lang-en">Behaviours appear with a live classification overlay — <strong>Suspicious · Cleared · Escalate</strong>. A visible clock runs. Every call cascades into what the trainee sees next.</span><span class="lang-ar">تظهر السلوكيّات مع طبقة تصنيف مباشرة — <strong>مشبوه · مُخلَّص · تصعيد</strong>. ساعة ظاهرة تعدّ. كلّ قرار يُغيّر ما يراه المتدرّب بعدها.</span></p>
+      </div>
+      <div class="inc-pillar reveal d2">
+        <div class="inc-pillar-num">3</div>
+        <h3><span class="lang-en">Force Deployment</span><span class="lang-ar">نشر القوى</span></h3>
+        <p><span class="lang-en">Classifications drive consequences: dispatch a patrol, trigger platform lockdown, initiate evacuation. The response plays forward in the sim and is graded on proportionality and timing.</span><span class="lang-ar">التصنيفات تُحرّك النتائج: إرسال دوريّة، إغلاق الرصيف، بدء الإخلاء. تُنفَّذ الاستجابة داخل المحاكاة وتُقيَّم على التناسب والتوقيت.</span></p>
+      </div>
+    </div>
+
+    <div class="incident-card reveal">
+      <div class="inc-hero-visual">
+        <img src="visuals/rail-concourse.jpg" alt="" class="inc-hero-img">
+        <div class="inc-hero-overlay"></div>
+        <div class="inc-hero-hud hud-tl">
+          <span class="hud-rec"></span>
+          <span class="hud-txt"><span class="lang-en">CAM-04 · FLINDERS · PLATFORM 9</span><span class="lang-ar">كاميرا ٤ · فليندرز · الرصيف ٩</span></span>
+        </div>
+        <div class="inc-hero-hud hud-tr">
+          <span class="hud-txt">T−45s · LIVE</span>
+        </div>
+        <svg class="inc-hero-bbox" viewBox="0 0 100 56" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="22" y="30" width="8" height="18" rx="0.6" fill="none" stroke="#BAAC98" stroke-width="0.25" opacity="0.7"/>
+          <rect x="52" y="24" width="7" height="17" rx="0.6" fill="none" stroke="#BAAC98" stroke-width="0.25" opacity="0.6"/>
+          <rect x="68" y="28" width="8" height="20" rx="0.6" fill="none" stroke="#c94c4c" stroke-width="0.45"/>
+          <text x="68" y="26.5" font-size="1.8" font-family="ui-monospace, monospace" font-weight="700" fill="#c94c4c" letter-spacing="0.1">FLAGGED</text>
+          <rect x="40" y="44" width="4" height="3" rx="0.4" fill="none" stroke="#E6B800" stroke-width="0.35" stroke-dasharray="0.8 0.5"/>
+          <text x="40" y="42.6" font-size="1.5" font-family="ui-monospace, monospace" font-weight="700" fill="#E6B800">BAG · UNATTENDED</text>
+        </svg>
+        <div class="inc-hero-hud hud-bl">
+          <span class="hud-pill hud-pill-sus"><span class="lang-en">Suspicious Behaviour · Gate G2</span><span class="lang-ar">سلوك مشبوه · بوّابة ق2</span></span>
+        </div>
+        <div class="inc-hero-hud hud-br">
+          <span class="hud-caps">CAP-1 · CAP-2 · CAP-3 · CAP-4</span>
+        </div>
+      </div>
+      <div class="inc-brief">
+        <div class="inc-brief-tag"><span class="lang-en">Hero Incident · Transit · Mass Evacuation</span><span class="lang-ar">حادث محوري · نقل · إخلاء جماعي</span></div>
+        <h3><span class="lang-en">Melbourne Train Station Evacuation</span><span class="lang-ar">إخلاء محطة قطارات ملبورن</span></h3>
+        <p><span class="lang-en">Inspired by the Melbourne transit scenario referenced by the client. A major transit node under time pressure is the hardest CAPS test we can stage — it exercises all four capabilities at once, rewards operators who backtrack, and punishes over-deployment as harshly as under-deployment.</span><span class="lang-ar">مستوحى من سيناريو النقل في ملبورن الذي أشار إليه العميل. محطة نقل رئيسية تحت ضغط الوقت هي أصعب اختبار يمكن تصميمه لإطار القدرات — يُفعّل القدرات الأربع معاً، ويكافئ من يراجع قراراته، ويُعاقب النشر الزائد كما يُعاقب التقصير.</span></p>
+      </div>
+
+      <div class="inc-timeline-wrap">
+        <div class="inc-timeline-lbl"><span class="lang-en">Scenario Timeline · 90-second decision window</span><span class="lang-ar">الخط الزمني · نافذة قرار 90 ثانية</span></div>
+        <div class="inc-timeline">
+          <div class="inc-tick" style="left:3%"></div>   <div class="inc-tick-lbl" style="left:3%">T−90s</div>
+          <div class="inc-tick" style="left:30%"></div>  <div class="inc-tick-lbl" style="left:30%">T−50s</div>
+          <div class="inc-tick" style="left:62%"></div>
+          <div class="inc-threat" style="left:62%">T0</div>
+          <div class="inc-threat-lbl" style="left:62%; top:36px;"><span class="lang-en">Incident</span><span class="lang-ar">الحادث</span></div>
+          <div class="inc-tick" style="left:85%"></div>  <div class="inc-tick-lbl" style="left:85%">T+30s</div>
+          <div class="inc-tick" style="left:97%"></div>  <div class="inc-tick-lbl" style="left:97%">T+60s</div>
+        </div>
+
+        <div class="inc-gates">
+          <div class="inc-gate">
+            <div class="inc-gate-hd">
+              <div class="inc-gate-id">G1</div>
+              <div class="inc-gate-time">T−85s</div>
+            </div>
+            <div class="inc-gate-see"><strong><span class="lang-en">See:</span><span class="lang-ar">يرى:</span></strong> <span class="lang-en">Individual loitering near ticket hall, avoiding camera line-of-sight.</span><span class="lang-ar">شخص يتسكّع قرب صالة التذاكر ويتجنّب خطّ الكاميرا.</span></div>
+            <div class="inc-gate-call">
+              <span class="inc-call-pill sus"><span class="lang-en">Suspicious</span><span class="lang-ar">مشبوه</span></span>
+              <span class="inc-call-pill clr"><span class="lang-en">Cleared</span><span class="lang-ar">مُخلَّص</span></span>
+            </div>
+            <div class="inc-gate-caps">
+              <span class="inc-cap-badge">CAP-1</span>
+              <span class="inc-cap-badge">CAP-4</span>
+            </div>
+          </div>
+
+          <div class="inc-gate">
+            <div class="inc-gate-hd">
+              <div class="inc-gate-id">G2</div>
+              <div class="inc-gate-time">T−45s</div>
+            </div>
+            <div class="inc-gate-see"><strong><span class="lang-en">See:</span><span class="lang-ar">يرى:</span></strong> <span class="lang-en">Unattended bag on platform — same zone, individual now absent.</span><span class="lang-ar">حقيبة متروكة على الرصيف — الشخص نفسه غاب.</span></div>
+            <div class="inc-gate-call">
+              <span class="inc-call-pill back"><span class="lang-en">Backtrack G1</span><span class="lang-ar">راجع ق1</span></span>
+              <span class="inc-call-pill esc"><span class="lang-en">Escalate</span><span class="lang-ar">تصعيد</span></span>
+            </div>
+            <div class="inc-gate-caps">
+              <span class="inc-cap-badge">CAP-1</span>
+              <span class="inc-cap-badge">CAP-2</span>
+            </div>
+          </div>
+
+          <div class="inc-gate">
+            <div class="inc-gate-hd">
+              <div class="inc-gate-id">G3</div>
+              <div class="inc-gate-time">T−10s</div>
+            </div>
+            <div class="inc-gate-see"><strong><span class="lang-en">See:</span><span class="lang-ar">يرى:</span></strong> <span class="lang-en">Vehicle approaching pedestrian concourse at speed from north gate.</span><span class="lang-ar">مركبة تقترب من صالة المشاة بسرعة من البوابة الشمالية.</span></div>
+            <div class="inc-gate-call">
+              <span class="inc-call-pill sus"><span class="lang-en">Lockdown</span><span class="lang-ar">إغلاق</span></span>
+              <span class="inc-call-pill esc"><span class="lang-en">Deploy Patrol</span><span class="lang-ar">إرسال دوريّة</span></span>
+            </div>
+            <div class="inc-gate-caps">
+              <span class="inc-cap-badge">CAP-3</span>
+              <span class="inc-cap-badge">CAP-2</span>
+            </div>
+          </div>
+
+          <div class="inc-gate">
+            <div class="inc-gate-hd">
+              <div class="inc-gate-id">G4</div>
+              <div class="inc-gate-time">T+30s</div>
+            </div>
+            <div class="inc-gate-see"><strong><span class="lang-en">See:</span><span class="lang-ar">يرى:</span></strong> <span class="lang-en">Evacuation underway — secondary crowd surge building at Exit B.</span><span class="lang-ar">الإخلاء جارٍ — اندفاع ثانوي للحشد عند مخرج ب.</span></div>
+            <div class="inc-gate-call">
+              <span class="inc-call-pill esc"><span class="lang-en">Redirect Flow</span><span class="lang-ar">تحويل المسار</span></span>
+              <span class="inc-call-pill sus"><span class="lang-en">Deploy Unit 2</span><span class="lang-ar">وحدة ثانية</span></span>
+            </div>
+            <div class="inc-gate-caps">
+              <span class="inc-cap-badge">CAP-3</span>
+              <span class="inc-cap-badge">CAP-4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inc-caps-strip">
+        <div class="inc-caps-strip-lbl"><span class="lang-en">CAPS Tie-back</span><span class="lang-ar">ربط بإطار القدرات</span></div>
+        <div class="inc-caps-strip-body"><span class="lang-en">Every gate fires a measurable signal into the operator's CAPS profile: <strong>CAP-1 Sensemaking</strong>, <strong>CAP-2 Communication</strong>, <strong>CAP-3 Decision</strong>, <strong>CAP-4 Continuous Monitoring</strong>. One incident, four measurements.</span><span class="lang-ar">كلّ بوّابة تُطلق إشارة قابلة للقياس في ملف قدرات المشغّل: <strong>القدرة 1: الفهم</strong>، <strong>القدرة 2: التواصل</strong>، <strong>القدرة 3: القرار</strong>، <strong>القدرة 4: المراقبة المستمرّة</strong>. حادث واحد، أربعة قياسات.</span></div>
+      </div>
+    </div>
+
+    <div class="key-msg reveal">
+      <span class="lang-en">Scenario drills measure what operators notice. Complex incidents measure <strong>what they decide when it costs something</strong>.</span>
+      <span class="lang-ar">التمارين تقيس ما يُلاحظه المشغّلون. الحوادث المركّبة تقيس <strong>ما يقرّرونه حين يكون للقرار ثمن</strong>.</span>
+    </div>
+  </div>
+</section>
+
+<div class="pattern-divider"></div>
+
 <!-- ═══ SECTION: MR ═══ -->
 <section class="section tint" id="mr">
   <div class="container">
@@ -2564,7 +2964,6 @@ html[dir="rtl"] .watermark { right: auto; left: 1.5rem; }
         <span class="lang-ar">الواقع المختلط يُحوّل كيف يتعلّم المشغّلون. المنصّة ذاتها التي تقيس القدرة تستطيع الآن تدريسها.</span>
       </p>
     </div>
-    <img src="visuals/mr-training-visual.png" alt="MR Training" class="reveal" style="width:100%; max-width:900px; margin:0 auto 2rem; border-radius:10px; box-shadow: var(--shadow-md);">
     <div class="mr-video reveal">
       <video controls preload="metadata" playsinline poster="visuals/mr-training-visual.png">
         <source src="mr-demo.mp4" type="video/mp4">
